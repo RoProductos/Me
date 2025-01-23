@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            background-color: black;
             color: white;
             overflow: hidden;
         }
@@ -17,31 +17,32 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 200px;
+            width: 400px;
             height: 100%;
-            background-color: #333;
+            background-color: #222;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.7);
         }
 
         #sidebar h1 {
             margin: 20px 0;
-            font-size: 1.5em;
+            font-size: 2em;
             color: #00aaff;
         }
 
         #sidebar button {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
+            width: 90%;
+            margin: 15px 0;
+            padding: 15px;
             background-color: #00aaff;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1em;
         }
 
         #sidebar button:hover {
@@ -49,21 +50,34 @@
         }
 
         #content {
-            margin-left: 220px;
+            margin-left: 420px;
             padding: 20px;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            margin-top: 20px;
         }
 
         .grid-item {
-            background-color: #444;
+            background-color: #333;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid-item h3 {
+            margin: 10px 0;
+            color: #00aaff;
+        }
+
+        .grid-item p {
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #ccc;
         }
 
         .grid-item button {
@@ -166,9 +180,9 @@
             loadDataHub();
         }
 
-        // Load DataHub grids from a .txt file
+        // Load DataHub grids from a GitHub-hosted .txt file
         async function loadDataHub() {
-            const response = await fetch('datahub.txt');
+            const response = await fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/Assets.txt');
             const text = await response.text();
             const lines = text.split('\n');
 
@@ -176,15 +190,23 @@
             grid.innerHTML = '';
 
             lines.forEach(line => {
-                const [name, link] = line.split(',');
-                if (name && link) {
+                const [name, link, description] = line.split('/:');
+                if (name && link && description) {
                     const gridItem = document.createElement('div');
                     gridItem.classList.add('grid-item');
 
+                    const title = document.createElement('h3');
+                    title.textContent = name;
+
+                    const desc = document.createElement('p');
+                    desc.textContent = description;
+
                     const button = document.createElement('button');
-                    button.textContent = name;
+                    button.textContent = 'Visit';
                     button.onclick = () => window.open(link, '_blank');
 
+                    gridItem.appendChild(title);
+                    gridItem.appendChild(desc);
                     gridItem.appendChild(button);
                     grid.appendChild(gridItem);
                 }
