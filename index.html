@@ -1,87 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #121212;
-            color: white;
-        }
-        .container {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-            width: 300px;
-            text-align: center;
-        }
-        input {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #6200ea;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #3700b3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #121212;
+      color: white;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3700b3;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Log In</button>
-        <p>or</p>
-        <button onclick="signup()">Sign Up</button>
-        <p id="response"></p>
-    </div>
+  <div class="container">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Log In</button>
+    <p>or</p>
+    <button onclick="signup()">Sign Up</button>
+    <p id="response"></p>
+  </div>
 
-    <script>
-        async function apiRequest(endpoint, data) {
-            const response = await fetch("database171.p.rapidapi.com" + endpoint, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-RapidAPI-Key": "182727e4c7mshf79e795263f1b8fp10f14ajsn4774e52208cf"
-                },
-                body: JSON.stringify(data)
-            });
-            return response.json();
-        }
+  <script>
+    // Replace these values with your RapidAPI details
+    const RAPIDAPI_HOST = 'database171.p.rapidapi.com'; // e.g. 'your-api-name.p.rapidapi.com'
+    const RAPIDAPI_KEY = '182727e4c7mshf79e795263f1b8fp10f14ajsn4774e52208cf';
+    // If your API is versioned or has a specific base path, update BASE_URL accordingly.
+    const BASE_URL = `https://database171.p.rapidapi.com`;
 
-        async function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            
-            const result = await apiRequest("login", { username, password });
-            document.getElementById("response").innerText = result.message;
+    async function apiRequest(endpoint, data) {
+      try {
+        const response = await fetch(`${BASE_URL}/${endpoint}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-RapidAPI-Host': RAPIDAPI_HOST,
+            'X-RapidAPI-Key': RAPIDAPI_KEY
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'API Error');
         }
+        
+        return await response.json();
+      } catch (error) {
+        return { message: error.message };
+      }
+    }
 
-        async function signup() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            
-            const result = await apiRequest("signup", { username, password });
-            document.getElementById("response").innerText = result.message;
-        }
-    </script>
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      
+      const result = await apiRequest("login", { username, password });
+      document.getElementById("response").innerText = result.message;
+    }
+
+    async function signup() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      
+      const result = await apiRequest("signup", { username, password });
+      document.getElementById("response").innerText = result.message;
+    }
+  </script>
 </body>
 </html>
