@@ -79,20 +79,6 @@
     </style>
 </head>
 <body>
-    <audio id="bg-audio" loop>
-        <source src="https://ia601308.us.archive.org/4/items/two-hours-of-hamas-music/Two%20Hours%20of%20Hamas%20Music.mp3" type="audio/mpeg">
-    </audio>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const audio = document.getElementById("bg-audio");
-            audio.play().catch(error => {
-                console.log("Autoplay failed: ", error);
-            });
-            audio.addEventListener("ended", () => {
-                audio.play();
-            });
-        });
-    </script>
     <div class="vhs-effect"></div>
     <div class="grid-container">
         <div class="info-box">
@@ -116,6 +102,13 @@
             }
         }
         createSnow();
+
+        function playAudio() {
+            let audio = new Audio("your-audio-file.mp3");
+            audio.loop = true;
+            audio.play().catch(error => console.log("Autoplay failed: ", error));
+        }
+        window.addEventListener("click", playAudio, { once: true });
     </script>
 </body>
 </html>
