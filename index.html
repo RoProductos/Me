@@ -1,104 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #121212;
-      color: white;
-    }
-    .container {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-      width: 300px;
-      text-align: center;
-    }
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #6200ea;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #3700b3;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Intro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        .vhs-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif');
+            mix-blend-mode: screen;
+            opacity: 0.2;
+        }
+        .grid-container {
+            width: 60%;
+            height: 60vh;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: url('https://raw.githubusercontent.com/yourgithubusername/yourrepo/main/yourimage.png');
+            background-size: cover;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+        }
+        .info-box {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        .snow {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: snowfall linear infinite;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Log In</button>
-    <p>or</p>
-    <button onclick="signup()">Sign Up</button>
-    <p id="response"></p>
-  </div>
-
-  <script>
-    // Replace these values with your RapidAPI details
-    const RAPIDAPI_HOST = 'database171.p.rapidapi.com'; // e.g. 'your-api-name.p.rapidapi.com'
-    const RAPIDAPI_KEY = '182727e4c7mshf79e795263f1b8fp10f14ajsn4774e52208cf';
-    // If your API is versioned or has a specific base path, update BASE_URL accordingly.
-    const BASE_URL = `https://database171.p.rapidapi.com`;
-
-    async function apiRequest(endpoint, data) {
-      try {
-        const response = await fetch(`${BASE_URL}/${endpoint}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-RapidAPI-Host': RAPIDAPI_HOST,
-            'X-RapidAPI-Key': RAPIDAPI_KEY
-          },
-          body: JSON.stringify(data)
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'API Error');
+    <div class="vhs-effect"></div>
+    <div class="grid-container">
+        <div class="info-box">
+            <h1 class="text-3xl font-bold">Your Name</h1>
+            <p class="text-sm mt-2">Welcome to my digital space.</p>
+            <p class="text-sm mt-2">[Your bio goes here]</p>
+        </div>
+    </div>
+    <script>
+        function createSnow() {
+            for (let i = 0; i < 100; i++) {
+                let snow = document.createElement("div");
+                snow.className = "snow";
+                snow.style.left = Math.random() * window.innerWidth + "px";
+                snow.style.top = Math.random() * window.innerHeight + "px";
+                snow.style.animationDuration = (Math.random() * 5 + 5) + "s";
+                document.body.appendChild(snow);
+            }
         }
-        
-        return await response.json();
-      } catch (error) {
-        return { message: error.message };
-      }
-    }
-
-    async function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      
-      const result = await apiRequest("login", { username, password });
-      document.getElementById("response").innerText = result.message;
-    }
-
-    async function signup() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      
-      const result = await apiRequest("signup", { username, password });
-      document.getElementById("response").innerText = result.message;
-    }
-  </script>
+        createSnow();
+    </script>
 </body>
 </html>
