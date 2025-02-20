@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Intro</title>
+    <title>Bio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -20,7 +20,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 100;
-            background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif');
+            background: url('https://media.giphy.com/media/l44QvKoQuUD3xPZKg/giphy.gif');
             mix-blend-mode: screen;
             opacity: 0.2;
         }
@@ -56,15 +56,38 @@
             border-radius: 50%;
             animation: snowfall linear infinite;
         }
+        .discord-invite {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #5865F2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .discord-invite:hover {
+            background: #4752C4;
+        }
+        .emoji {
+            width: 32px;
+            height: 32px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
     <div class="vhs-effect"></div>
     <div class="grid-container">
         <div class="info-box">
-            <h1 class="text-3xl font-bold">Your Name</h1>
-            <p class="text-sm mt-2">Welcome to my digital space.</p>
-            <p class="text-sm mt-2">[Your bio goes here]</p>
+            <h1 class="text-3xl font-bold">Enixicious</h1>
+            <p class="text-sm mt-2">Welcome to my Bio.</p>
+            <p class="text-sm mt-2">Join my Discord Milsim Community</p>
+            <a href="https://discord.gg/SYEyu6nHfJ" target="_blank" class="discord-invite">Join Now</a>
+            <br>
+            <img src="https://cdn.discordapp.com/emojis/your_emoji_id.gif" alt="Emoji" class="emoji">
         </div>
     </div>
     <script>
